@@ -1,0 +1,37 @@
+{
+  "name": "weixin",
+  "version": "0.0.1",
+  "description": "微信公众号平台开发API",
+  "main": "./build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "node_modules/.bin/babel src/index.js --plugin add-module-exports src/index.js > build/index.js",
+    "prepublish": "npm run compile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wuhaixing/weixin.git"
+  },
+  "keywords": [
+    "weixin",
+    "wechat",
+    "offical account api"
+  ],
+  "author": "wuhaixing@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wuhaixing/weixin/issues"
+  },
+  "homepage": "https://github.com/wuhaixing/weixin#readme",
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-runtime": "^6.9.2"
+  },
+  "dependencies": {
+    "crypto": "0.0.3",
+    "isomorphic-fetch": "^2.2.1",
+    "qs": "^6.2.0"
+  }
+}
