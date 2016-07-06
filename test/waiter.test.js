@@ -9,8 +9,8 @@ import {getQueryStr,toXML} from './msg_populator'
 const app = express()
 
 const weixin = new Weixin({
-	appId:'wx212af6a39faa2819',
-	appSecret: 'ab0590c7f4d5fc9acbab77ac8408d9d7',
+	appId:'YourAppId',
+	appSecret: 'YourAppSecret',
 	token:'token'
 })
 const waiterUrl = '/api/weixin'
