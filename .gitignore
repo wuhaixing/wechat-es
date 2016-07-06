@@ -35,3 +35,6 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+#The compiled files for ES5 to not push via git
+lib

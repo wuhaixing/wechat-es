@@ -1,21 +1,20 @@
-export { Waiter } from './lib/waiter'
-export { Talker } from './lib/talker'
-
-export * from './lib/managers/index'
+import Waiter from './waiter'
+import Talker from './talker'
 
 export default class Weixin {
   constructor(options) {
     this.waiter = new Waiter(options)
     this.talker = new Talker(options)
   }
-  get waiter() {
+
+  getWaiter() {
     return this.waiter
   }
 
-  get talker() {
+  getTalker() {
     return this.talker
   }
-
+  
   setReplyPopulatorOfWaiter(populator) {
     if(this.waiter) {
         this.waiter.populateReply = populator
@@ -28,3 +27,6 @@ export default class Weixin {
 
   }
 }
+export { Waiter,Talker }
+
+export * from './managers/index'
