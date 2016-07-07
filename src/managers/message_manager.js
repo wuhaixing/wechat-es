@@ -6,13 +6,13 @@
 const massUrlPrefix = "https://api.weixin.qq.com/cgi-bin/message/mass/"
 const customUrlPrefix = "https://api.weixin.qq.com/cgi-bin/message/custom/"
 
-class UserManager {
-	
+class MessageManager {
+
 	static textToTag(content,tagId) {
 		let filter = {"is_to_all":true}
 		if(tagId) {
 			filter = { "is_to_all":false,"tag_id":tagId }
-		} 
+		}
         return {
 				  "url":`${massUrlPrefix}sendall`,
 				  "method" : "post",
@@ -43,4 +43,4 @@ class UserManager {
 
 }
 
-export default UserManager
+export default MessageManager
