@@ -60,7 +60,7 @@ class CustomServiceManager {
 									 "password" : password,
 								}
 			}
-    }}
+    }
 		/**
 		* 设置客服帐号的头像
 		* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140547&token=&lang=zh_CN#1.4
@@ -77,7 +77,7 @@ class CustomServiceManager {
 									 "file" : file
 								}
 			}
-    }}
+    }
 		/**
 		* 获取所有客服账号
 		* 官方文档：
@@ -90,4 +90,5 @@ class CustomServiceManager {
 					"method" : "get"
 				}
 		}
+}
 export default CustomServiceManager

@@ -1,7 +1,7 @@
 {
   "name": "wechat-es",
-  "version": "0.0.2",
-  "description": "微信公众号平台开发API",
+  "version": "0.0.3",
+  "description": "基于ES 6及Fetch API实现的微信公众号平台开发API",
   "main": "./lib/index.js",
   "scripts": {
     "compile": "babel -d lib/ src/",

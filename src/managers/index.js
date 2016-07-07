@@ -1,2 +1,5 @@
 export { MessageManager } from './message_manager'
 export { UserManager } from './user_manager'
+export { MenuManager } from './menu_manager'
+export { CustomerMessageManager } from './customer_message_manager'
+export { CustomerServiceManager } from './customer_service_manager'
