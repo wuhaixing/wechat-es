@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wuhaixing/weixin.git"
+    "url": "git+https://github.com/wuhaixing/wechat-es.git"
   },
   "keywords": [
     "weixin",
@@ -20,9 +20,9 @@
   "author": "wuhaixing@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wuhaixing/weixin/issues"
+    "url": "https://github.com/wuhaixing/wechat-es/issues"
   },
-  "homepage": "https://github.com/wuhaixing/weixin#readme",
+  "homepage": "https://github.com/wuhaixing/wechat-es#readme",
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
