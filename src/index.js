@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import Waiter from './waiter'
 import Talker from './talker'
 
@@ -14,7 +15,7 @@ export default class Weixin {
   getTalker() {
     return this.talker
   }
-  
+
   setReplyPopulatorOfWaiter(populator) {
     if(this.waiter) {
         this.waiter.populateReply = populator
