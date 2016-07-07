@@ -1,10 +1,11 @@
 # wechat-es
 
-本项目起源于[搭建微信公众号服务器](https://wuhaixing.gitbooks.io/-weixin-server/content/)。
+本项目起源于[搭建微信公众号服务器](https://wuhaixing.gitbooks.io/-weixin-server/content/)：
 
 - [环境配置](https://wuhaixing.gitbooks.io/-weixin-server/content/chapter1.html)
 - [解读微信公众号开发文档](https://wuhaixing.gitbooks.io/-weixin-server/content/lu_wen_dang.html)
 - [被动回复消息](https://wuhaixing.gitbooks.io/-weixin-server/content/wo_gai_ru_he_hui_fu_ni.html)
+- [发送消息](https://wuhaixing.gitbooks.io/-weixin-server/content/fa_song_xiao_xi.html)
 
 ## 安装
 
@@ -76,7 +77,7 @@ talker.send(UserManager.usersGet())
 		  .then(json => {
 		  	if(!json.errcode) {		  		
 				console.log("Get users:",json)
-		  		return MessageManager.textToCustom("感谢订阅",json.next_openid)
+		  		return CustomerMessageManager.text(json.next_openid,"感谢订阅")
 		  	} else {
 		  		console.log("Get user list got error:",json.errmsg)
 				throw Error(json.errmsg)

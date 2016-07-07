@@ -4,7 +4,6 @@
 */
 
 const massUrlPrefix = "https://api.weixin.qq.com/cgi-bin/message/mass/"
-const customUrlPrefix = "https://api.weixin.qq.com/cgi-bin/message/custom/"
 
 class MessageManager {
 
@@ -25,22 +24,7 @@ class MessageManager {
 							}
 				}
     }
-
-    static textToCustom(content,openId) {
-    	return {
-				  "url":`${customUrlPrefix}send`,
-				  "method" : "post",
-				  "body": {
-							   "touser":openId,
-							    "msgtype":"text",
-							    "text":
-							    {
-							         "content":content
-							    }
-							}
-				}
-    }
-
+		
 }
 
 export default MessageManager

@@ -1,11 +1,5 @@
 /**
 * 自定义菜单管理接口
-* 事件推送（在Waiter中处理）：
-* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141016&token=&lang=zh_CN
-* 个性化菜单接口：
-* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296&token=&lang=zh_CN
-* 获取自定义菜单配置接口：
-* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1434698695&token=&lang=zh_CN
 */
 
 const menuUrlPrefix = " https://api.weixin.qq.com/cgi-bin/menu/"
