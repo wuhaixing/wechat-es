@@ -4,9 +4,9 @@
 *
 */
 
-const customServiceUrlPrefix = "https://api.weixin.qq.com/customservice/kfaccount/"
+const customerServiceUrlPrefix = "https://api.weixin.qq.com/customservice/kfaccount/"
 
-class CustomServiceManager {
+class CustomerServiceManager {
   /**
 	* 添加客服账号
 	* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140547&token=&lang=zh_CN#1.1
@@ -16,7 +16,7 @@ class CustomServiceManager {
 	*/
 	static add(account,nickname,password) {
         return {
-				  "url":`${massUrlPrefix}add`,
+				  "url":`${customerServiceUrlPrefix}add`,
 				  "method" : "post",
 				  "body": {
 								     "kf_account" : account,
@@ -34,7 +34,7 @@ class CustomServiceManager {
 		*/
     static update(account,nickname,password) {
 			return {
-				"url":`${massUrlPrefix}update`,
+				"url":`${customerServiceUrlPrefix}update`,
 				"method" : "post",
 				"body": {
 									 "kf_account" : account,
@@ -52,7 +52,7 @@ class CustomServiceManager {
 		*/
     static delete(account,nickname,password) {
 			return {
-				"url":`${massUrlPrefix}del`,
+				"url":`${customerServiceUrlPrefix}del`,
 				"method" : "post",
 				"body": {
 									 "kf_account" : account,
@@ -65,17 +65,14 @@ class CustomServiceManager {
 		* 设置客服帐号的头像
 		* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140547&token=&lang=zh_CN#1.4
 		* @param account 客服账号
-		* @param file 要上传的文件表单
-		* @TODO 实现文件的表单封装
+		* @param file 要上传的文件
 		*/
-    static uploadHeadImg(account,fileForm) {
+    static headImg(account,file) {
 			return {
-				"url":`${massUrlPrefix}uploadheadimg`,
-				"method" : "post",
+				"url":`${customerServiceUrlPrefix}uploadheadimg`,
+				"method" : "upload",
 				"parameters": {	"kf_account": account },
-				"body": {
-									 "file" : file
-								}
+				"media" : file
 			}
     }
 		/**
@@ -84,11 +81,11 @@ class CustomServiceManager {
 		* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141014&token=&lang=zh_CN#1.5
 		*
 	 */
-		static getList() {
+		static list() {
 				return {
-					"url":`${menuUrlPrefix}getkflist`,
+					"url":`${customerServiceUrlPrefix}getkflist`,
 					"method" : "get"
 				}
 		}
 }
-export default CustomServiceManager
+export default CustomerServiceManager
