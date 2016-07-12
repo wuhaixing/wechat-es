@@ -17,9 +17,7 @@ class TokenKeeper {
 
 	get accessToken() {
   	if(this._expiresAt > Date.now()) {
-			return new Promise(( resolve,reject) => {
-				 resolve(this._accessToken)
-			})
+			return Promise.resolve(this._accessToken)
 		} else {
 			return this.loadAccessToken().then( result => {
 				this._accessToken = result.access_token

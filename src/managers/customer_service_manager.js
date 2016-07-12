@@ -27,7 +27,7 @@ class CustomerServiceManager {
 			  "body": {
 							     "kf_account" : account,
 							     "nickname" : nickname,
-							     "password" : password,
+							     "password" : password
 								}
 			}
     }

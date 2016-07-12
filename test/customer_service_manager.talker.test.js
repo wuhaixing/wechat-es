@@ -14,7 +14,7 @@ const weixin = new Weixin({
 const talker = weixin.getTalker()
 
 chai.use(chaiAsPromised)
-const addNock = nock('https://api.weixin.qq.com')
+const tokenNock = nock('https://api.weixin.qq.com')
 										.defaultReplyHeaders({
 											'Content-Type': 'application/json'
 										})
@@ -28,7 +28,17 @@ const addNock = nock('https://api.weixin.qq.com')
 											'access_token':'accessToken',
 											'expires_in':7200
 										})
-								    .post('/customservice/kfaccount/add')
+										.persist()
+
+const addNock = nock('https://api.weixin.qq.com')
+										.defaultReplyHeaders({
+											'Content-Type': 'application/json'
+										})
+								    .post('/customservice/kfaccount/add',{
+											"kf_account" : "test1@test",
+		 							    "nickname" : "test1",
+		 							    "password" : "76a2173be6393254e72ffa4d6df1030a"
+										})
 										.query({"access_token":'accessToken'})
 								    .reply(200, {
 											errcode:0,
@@ -39,17 +49,11 @@ const delNock = nock('https://api.weixin.qq.com/')
 										.defaultReplyHeaders({
 											'Content-Type': 'application/json'
 										})
-										.get('/cgi-bin/token')
-										.query({
-											'grant_type':'client_credential',
-											'appid':'appId',
-											'secret':'appSecret'
+										.post('/customservice/kfaccount/del',{
+											"kf_account" : "test1@test",
+		 							    "nickname" : "test1",
+		 							    "password" : "76a2173be6393254e72ffa4d6df1030a"
 										})
-										.reply(200, {
-											'access_token':'accessToken',
-											'expires_in':7200
-										})
-										.post('/customservice/kfaccount/del')
 										.query({"access_token":'accessToken'})
 								    .reply(200, {
 											errcode:0,
@@ -59,16 +63,6 @@ const delNock = nock('https://api.weixin.qq.com/')
 const listNock = nock('https://api.weixin.qq.com/')
 										.defaultReplyHeaders({
 											'Content-Type': 'application/json'
-										})
-										.get('/cgi-bin/token')
-										.query({
-											'grant_type':'client_credential',
-											'appid':'appId',
-											'secret':'appSecret'
-										})
-										.reply(200, {
-											'access_token':'accessToken',
-											'expires_in':7200
 										})
 										.get('/customservice/kfaccount/getkflist')
 										.query({"access_token":'accessToken'})
