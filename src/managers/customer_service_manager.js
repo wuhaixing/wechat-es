@@ -3,6 +3,7 @@
 * https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140547&token=&lang=zh_CN#1
 *
 */
+import crypto from 'crypto'
 
 const customerServiceUrlPrefix = "https://api.weixin.qq.com/customservice/kfaccount/"
 
@@ -12,27 +13,37 @@ class CustomerServiceManager {
 	* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140547&token=&lang=zh_CN#1.1
 	* @param account 客服账号
 	* @param nickname 昵称
-	* @param password 密码
+	* @param password 密码，传入经过md5加密的密文时需要将encrypted设为true
+	* @param encrypted 是否需要对密码进行加密
 	*/
-	static add(account,nickname,password) {
-        return {
-				  "url":`${customerServiceUrlPrefix}add`,
-				  "method" : "post",
-				  "body": {
-								     "kf_account" : account,
-								     "nickname" : nickname,
-								     "password" : password,
-									}
-				}
+	static add(account,nickname,password,encrypted) {
+		if(!encrypted) {
+			const hash = crypto.createHash('md5')
+		  password = hash.update(password).digest('hex')
+		}
+    return {
+			  "url":`${customerServiceUrlPrefix}add`,
+			  "method" : "post",
+			  "body": {
+							     "kf_account" : account,
+							     "nickname" : nickname,
+							     "password" : password,
+								}
+			}
     }
 		/**
 		* 修改客服账号
 		* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140547&token=&lang=zh_CN#1.2
 		* @param account 客服账号
 		* @param nickname 昵称
-		* @param password 密码
+		* @param password 密码，传入经过md5加密的密文时需要将encrypted设为true
+		* @param encrypted 是否需要对密码进行加密
 		*/
-    static update(account,nickname,password) {
+    static update(account,nickname,password,encrypted) {
+			if(!encrypted) {
+				const hash = crypto.createHash('md5')
+			  password = hash.update(password).digest('hex')
+			}
 			return {
 				"url":`${customerServiceUrlPrefix}update`,
 				"method" : "post",
@@ -48,9 +59,14 @@ class CustomerServiceManager {
 		* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140547&token=&lang=zh_CN#1.3
 		* @param account 客服账号
 		* @param nickname 昵称
-		* @param password 密码
+		* @param password 密码，传入经过md5加密的密文时需要将encrypted设为true
+		* @param encrypted 是否需要对密码进行加密
 		*/
-    static delete(account,nickname,password) {
+    static delete(account,nickname,password,encrypted) {
+			if(!encrypted) {
+				const hash = crypto.createHash('md5')
+			  password = hash.update(password).digest('hex')
+			}
 			return {
 				"url":`${customerServiceUrlPrefix}del`,
 				"method" : "post",

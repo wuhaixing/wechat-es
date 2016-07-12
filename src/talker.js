@@ -26,26 +26,20 @@ class Talker {
 							case "upload":
 								return this._upload(url,message)
 							default:
-								return new Promise(( resolve,reject) => {
-											 throw {
+								throw {
 											 	errcode:10001,
 											 	errmsg:"There is no method in message"
 											 }
-								})
 						}
 					} else {
-						return new Promise(( resolve,reject) => {
-							 throw {
+						throw {
 							 	errcode:10000,
 							 	errmsg:"There is no access token avaliable"
 							 }
-						})
 					}
 				}).catch(err => {
 					console.log(err)
-					return new Promise(( resolve,reject) => {
-								 throw err
-							})
+					throw err
 				})
 	}
 
@@ -60,14 +54,17 @@ class Talker {
 	}
 
 	_get(url) {
+		//console.log(`get ${url}`)
 		return fetch(url)
 	}
 
 	_post(url,message) {
+		const body = JSON.stringify(message.body)
+		//console.log(`post ${body} to ${url}`)
 		return fetch(url, {
 		  method: 'POST',
 		  headers: headers,
-		  body: JSON.stringify(message.body)
+		  body: body
 		})
 	}
 

@@ -70,9 +70,9 @@ app.post(waiterUrl,xmlparser({trim: true, explicitArray: false}),function (req, 
 
 chai.should()
 
-describe('weixin', function () {
+describe('Weixin Waiter:', function () {
 
-  describe('waiter verify signature', function () {
+  describe('verify signature', function () {
     it('should echo echostr when get valid signature', function (done) {
       var q = {
         timestamp: new Date().getTime(),
@@ -98,7 +98,7 @@ describe('weixin', function () {
       .expect('error', done);
     });
   });
-  describe('waiter process message', function () {
+  describe('process message', function () {
     it('should echo text when get text message', function (done) {
       let msg = {
         fromusername:'user',
