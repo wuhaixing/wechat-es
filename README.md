@@ -11,8 +11,15 @@
 
     npm i -S wechat-es
 
+## 功能构成
 
-## Waiter
+跟微信公众号开放的API相对应，库主要提供两个服务类，分别是`Waiter`和`Talker`，可以在测试中看到这两个类的主要用法。
+
+### Waiter
+
+Waiter负责接收公众号的消息，进行签名的验证，还可以将响应封装成XML。
+
+![](http://www.ituring.com.cn/download/01ui7wDiwBI1.big)
 
 下面这个例子需要用到express和xmlparser：
 
@@ -68,7 +75,9 @@ app.post(waiterUrl,xmlparser({trim: true, explicitArray: false}),function (req, 
 
 ### Talker
 
-Talker 可以在任何地方使用，用manager创建消息，然后send这个消息就可以了。
+Talker 负责给微信公众号服务器发送消息，可以在任何地方使用，用manager创建消息，然后send这个消息就可以了。
+
+![](http://www.ituring.com.cn/download/01ui7xWDz4BL.big)
 
 ```js
 const talker = weixin.getTalker()
