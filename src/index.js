@@ -28,6 +28,5 @@ export default class Weixin {
 
   }
 }
-export { Waiter,Talker }
 
 export * from './managers/index'

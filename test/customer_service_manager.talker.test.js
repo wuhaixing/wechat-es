@@ -3,7 +3,7 @@ import chai from 'chai'
 import chaiAsPromised  from 'chai-as-promised'
 import nock from 'nock'
 import Weixin from '../lib'
-import CustomerServiceManager from '../lib/managers/customer_service_manager'
+import {CustomerServiceManager} from '../lib'
 
 const weixin = new Weixin({
 	appId:'appId',
