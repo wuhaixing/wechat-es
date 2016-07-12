@@ -6,46 +6,46 @@
 const tagUrlPrefix = "https://api.weixin.qq.com/cgi-bin/tags/"
 const userUrlPrefix = "https://api.weixin.qq.com/cgi-bin/user/"
 
-class UserManager {
-
-	static tagCreate(name) {
-        return {
-				  "url":`${tagUrlPrefix}create`,
-				  "method" : "post",
-				  "body": {
-				  	"tag" : {
-				    	"name" : "${name}"
-				  	}
-				  }
+function tagCreate(name) {
+		return {
+			"url":`${tagUrlPrefix}create`,
+			"method" : "post",
+			"body": {
+				"tag" : {
+					"name" : "${name}"
 				}
-    }
+			}
+		}
+}
 
-    static tagGet() {
-        return {
-				  "url":`${tagUrlPrefix}get`,
-				  "method" : "get"
-				}
-    }
+function tagGet() {
+		return {
+			"url":`${tagUrlPrefix}get`,
+			"method" : "get"
+		}
+}
 
-    static usersGet(nextOpenId) {
-    	if(nextOpenId) {
-				return {
-					  "url":`${userUrlPrefix}get`,
-					  "method" : "get",
-					  "parameters":
-					  	{
-					  		"next_openid": nextOpenId
-					  	}
-					}
-			} else {
-				return {
-					  "url":`${userUrlPrefix}get`,
-					  "method" : "get"
+function usersGet(nextOpenId) {
+	if(nextOpenId) {
+		return {
+				"url":`${userUrlPrefix}get`,
+				"method" : "get",
+				"parameters":
+					{
+						"next_openid": nextOpenId
 					}
 			}
+	} else {
+		return {
+				"url":`${userUrlPrefix}get`,
+				"method" : "get"
+			}
+	}
 
-    }
+}
 
+const UserManager = {
+	tagCreate,tagGet,usersGet
 }
 
 export default UserManager

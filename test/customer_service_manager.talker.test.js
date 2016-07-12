@@ -89,7 +89,7 @@ describe('Weixin Talker:', function (done) {
 
 		it('should delete account success', function () {
 				return talker.send(
-						CustomerServiceManager.delete('test1@test','test1','passwd')
+						CustomerServiceManager.del('test1@test','test1','passwd')
 				).then(response => response.json())
 				 .catch(response => {
 						console.log(response)

@@ -5,26 +5,26 @@
 
 const massUrlPrefix = "https://api.weixin.qq.com/cgi-bin/message/mass/"
 
-class MessageManager {
+const MessageManager = {
+	textToTag
+}
 
-	static textToTag(content,tagId) {
-		let filter = {"is_to_all":true}
-		if(tagId) {
-			filter = { "is_to_all":false,"tag_id":tagId }
-		}
-        return {
-				  "url":`${massUrlPrefix}sendall`,
-				  "method" : "post",
-				  "body": {
-							   "filter":filter,
-							   "text":{
-							      "content":content
-							   },
-							   "msgtype":"text"
-							}
+function textToTag(content,tagId) {
+	let filter = {"is_to_all":true}
+	if(tagId) {
+		filter = { "is_to_all":false,"tag_id":tagId }
+	}
+	return {
+		"url":`${massUrlPrefix}sendall`,
+		"method" : "post",
+		"body": {
+					 "filter":filter,
+					 "text":{
+							"content":content
+					 },
+					 "msgtype":"text"
 				}
-    }
-		
+	}
 }
 
 export default MessageManager
