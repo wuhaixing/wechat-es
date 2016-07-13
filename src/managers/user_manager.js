@@ -44,8 +44,6 @@ function usersGet(nextOpenId) {
 
 }
 
-const UserManager = {
+export default {
 	tagCreate,tagGet,usersGet
 }
-
-export default UserManager

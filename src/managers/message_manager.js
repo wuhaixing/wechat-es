@@ -5,10 +5,6 @@
 
 const massUrlPrefix = "https://api.weixin.qq.com/cgi-bin/message/mass/"
 
-const MessageManager = {
-	textToTag
-}
-
 function textToTag(content,tagId) {
 	let filter = {"is_to_all":true}
 	if(tagId) {
@@ -27,4 +23,6 @@ function textToTag(content,tagId) {
 	}
 }
 
-export default MessageManager
+export default {
+	textToTag
+}

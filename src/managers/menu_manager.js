@@ -82,7 +82,7 @@ function tryMatch(conditional) {
 			"body": conditional
 		}
 }
-const MenuManager = {
+
+export default {
   create,get,del,addConditional,delConditional,tryMatch
 }
-export default MenuManager

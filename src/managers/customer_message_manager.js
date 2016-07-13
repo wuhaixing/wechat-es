@@ -216,8 +216,6 @@ function setMessageAccount(message,account) {
   return message
 }
 
-const CustomerMessageManager = {
+export default {
   text,image,voice,video,music,news,mpNews,card,setMessageAccount
 }
-
-export default CustomerMessageManager

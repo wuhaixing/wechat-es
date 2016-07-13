@@ -103,7 +103,6 @@ function list() {
 			"method" : "get"
 		}
 }
-const CustomerServiceManager = {
+export default {
 	add,update,del,headImg,list
 }
-export default CustomerServiceManager

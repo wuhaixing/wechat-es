@@ -29,4 +29,4 @@ export default class Weixin {
   }
 }
 
-export * from './managers/index'
+export * from './managers/'
