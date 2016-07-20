@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import qs from 'qs'
+import fs from 'fs'
 import FormData from 'form-data'
 import TokenKeeper from './token_keeper'
 
@@ -70,7 +71,8 @@ class Talker {
 
 	_upload(url,message) {
 		const form = new FormData()
-		form.append('media',fs.createReadStream(message.media))
+		const media = message.body.media
+		form.append('media',fs.createReadStream(media))
 		return fetch(url, {
 		  method: 'POST',
 		  body: form

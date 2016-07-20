@@ -6,6 +6,7 @@ import request from 'supertest'
 import express from 'express'
 import Weixin from '../lib'
 import {getQueryStr,toXML} from './msg_populator'
+
 const app = express()
 
 const weixin = new Weixin({
