@@ -28,12 +28,7 @@ describe('Weixin Talker:', function (done) {
 							 true, //是否显示封面，false不显示，true即显示
 							 "content", //图文消息的具体内容，支持HTML标签，必须少于2万字符，小于1M，且此处会去除JS
 							 "contentSourceUrl")
-			).then(response => response.json())
-			 .catch(response => {
-					console.log(response)
-					Promise.resolve(response)
-			 })
-			 .then(result => {
+			).then(result => {
 				 return result.media_id
 			 })
 			 .should.eventually.equal("mediaId")

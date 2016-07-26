@@ -20,12 +20,7 @@ describe('Weixin Talker:', function (done) {
     it('should add account success', function () {
 			return talker.send(
 					CustomerServiceManager.add('test1@test','test1','passwd')
-			).then(response => response.json())
-			 .catch(response => {
-					console.log(response)
-					Promise.resolve(response)
-			 })
-			 .then(result => {
+			).then(result => {
 				 return result.errcode
 			 })
 			 .should.eventually.equal(0)
@@ -34,12 +29,7 @@ describe('Weixin Talker:', function (done) {
 		it('should delete account success', function () {
 				return talker.send(
 						CustomerServiceManager.del('test1@test','test1','passwd')
-				).then(response => response.json())
-				 .catch(response => {
-						console.log(response)
-						Promise.resolve(response)
-				 })
-				 .then(result => {
+				).then(result => {
 					 return result.errcode
 				 })
 				 .should.eventually.equal(0)
@@ -48,12 +38,7 @@ describe('Weixin Talker:', function (done) {
 		it('should get account list success', function () {
 				return talker.send(
 						CustomerServiceManager.list()
-				).then(response => response.json())
-				 .catch(response => {
-						console.log(response)
-						Promise.resolve(response)
-				 })
-				 .then(result => {
+				).then(result => {
 					 return result.errcode
 				 })
 				 .should.eventually.equal(0)

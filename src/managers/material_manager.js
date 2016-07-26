@@ -12,8 +12,41 @@
 */
 import Immutable,{List} from 'immutable'
 
-const mediaUrlPrefix = "https://api.weixin.qq.com/cgi-bin/media/"
 const materialUrlPrefix = "https://api.weixin.qq.com/cgi-bin/material/"
+
+/**
+* 新增永久素材
+* 官方文档：
+* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726&token=&lang=zh_CN
+* 公众号经常有需要用到一些临时性的多媒体素材的场景，例如在使用接口特别是发送消息时，对多媒体文件、
+* 多媒体消息的获取和调用等操作，是通过media_id来进行的。素材管理接口对所有认证的订阅号和服务号
+* 开放。通过本接口，公众号可以新增临时素材（即上传临时多媒体文件）。
+* 请注意：
+* 1、对于临时素材，每个素材（media_id）会在开发者上传或粉丝发送到微信服务器3天后自动删除
+*（所以用户发送给开发者的素材，若开发者需要，应尽快下载到本地），以节省服务器资源。
+* 2、media_id是可复用的。
+* 3、素材的格式大小等要求与公众平台官网一致。
+* 上传的临时多媒体文件有格式和大小限制，如下：
+*     图片（image）: 1M，支持JPG格式
+*     语音（voice）：2M，播放长度不超过60s，支持AMR\MP3格式
+*     视频（video）：10MB，支持MP4格式
+*     缩略图（thumb）：64KB，支持JPG格式
+* 4、媒体文件在后台保存时间为3天，即3天后media_id失效。
+* 返回说明
+* 发送该消息后，正确情况下微信服务器返回的JSON数据包结果如下：
+*   {"type":"TYPE","media_id":"MEDIA_ID","created_at":123456789}
+* @param type 媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb）
+* @param media form-data中媒体文件标识，有filename、filelength、content-type等信息
+*
+*/
+function material(type,media) {
+	return {
+		"url":`${materialUrlPrefix}add_material`,
+		"method" : "post",
+		"parameters": {	"type": type },
+		"body" : {"media":media}
+	}
+}
 
 /**
 * 上传图文消息内的图片获取URL
@@ -24,10 +57,21 @@ const materialUrlPrefix = "https://api.weixin.qq.com/cgi-bin/material/"
 *
 */
 function image(image) {
+	return material("image",media)
+}
+
+function video(media,title,introduction) {
 	return {
-		"url":`${mediaUrlPrefix}uploadimg`,
-		"method" : "upload",
-		"body" : {"media":image}
+		"url":`${materialUrlPrefix}add_material`,
+		"method" : "post",
+		"parameters": {	"type": type },
+		"body" : {
+			"media":media,
+			"description":{
+				"title" : title,
+				"introduction": introduction
+			}
+		}
 	}
 }
 /**
@@ -112,57 +156,6 @@ function articles(articles) {
 		throw Error("Articles format should be an Immutable List")
 	}
 
-}
-/**
-* 新增永久素材
-* 官方文档：
-* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726&token=&lang=zh_CN
-* 公众号经常有需要用到一些临时性的多媒体素材的场景，例如在使用接口特别是发送消息时，对多媒体文件、
-* 多媒体消息的获取和调用等操作，是通过media_id来进行的。素材管理接口对所有认证的订阅号和服务号
-* 开放。通过本接口，公众号可以新增临时素材（即上传临时多媒体文件）。
-* 请注意：
-* 1、对于临时素材，每个素材（media_id）会在开发者上传或粉丝发送到微信服务器3天后自动删除
-*（所以用户发送给开发者的素材，若开发者需要，应尽快下载到本地），以节省服务器资源。
-* 2、media_id是可复用的。
-* 3、素材的格式大小等要求与公众平台官网一致。
-* 上传的临时多媒体文件有格式和大小限制，如下：
-*     图片（image）: 1M，支持JPG格式
-*     语音（voice）：2M，播放长度不超过60s，支持AMR\MP3格式
-*     视频（video）：10MB，支持MP4格式
-*     缩略图（thumb）：64KB，支持JPG格式
-* 4、媒体文件在后台保存时间为3天，即3天后media_id失效。
-* 返回说明
-* 发送该消息后，正确情况下微信服务器返回的JSON数据包结果如下：
-*   {"type":"TYPE","media_id":"MEDIA_ID","created_at":123456789}
-* @param type 媒体文件类型，分别有图片（image）、语音（voice）、视频（video）和缩略图（thumb）
-* @param media form-data中媒体文件标识，有filename、filelength、content-type等信息
-*
-*/
-function material(type,media) {
-	const mediaForm = new FormData()
-	mediaForm.append("media",media)
-	return {
-		"url":`${materialUrlPrefix}add_material`,
-		"method" : "post",
-		"parameters": {	"type": type },
-		"body" : mediaForm
-	}
-}
-
-function video(media,title,introduction) {
-	const videoForm = new FormData()
-	videoForm.append("media",media)
-	const descriptionForm = new FormData()
-	descriptionForm.append("description",{
-		"title" : title,
-		"introduction": introduction
-	})
-	return {
-		"url":`${materialUrlPrefix}add_material`,
-		"method" : "post",
-		"parameters": {	"type": type },
-		"body" : [videoForm,descriptionForm]
-		}
 }
 
 export default {

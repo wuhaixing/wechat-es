@@ -1,7 +1,5 @@
 import 'babel-polyfill'
 import chai from 'chai'
-import qs from 'qs'
-import xmlparser from 'express-xml-bodyparser'
 import request from 'supertest'
 import express from 'express'
 import multer from 'multer'
@@ -22,7 +20,6 @@ var upload = multer({ dest: 'test/uploads/' })
 
 app.get("/users", function (req, res, next) {
   talker.send(UserManager.usersGet())
-        .then(response => response.json)
         .then(json => {
           res.send('success')
         })
@@ -35,7 +32,6 @@ app.post("/upload", upload.single('avatar'),function (req, res, next) {
       		"method" : "upload",
       		"body" : {"media" : uploadedImg }
       	})
-        .then(response => response.json)
         .then(json => {
           res.send('success')
         })
