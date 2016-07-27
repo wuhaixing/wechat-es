@@ -19,7 +19,7 @@
 
 Waiter负责接收公众号的消息，进行签名的验证，还可以将响应封装成XML。
 
-![](http://www.ituring.com.cn/download/01ui7wDiwBI1.big)
+![](http://www.ituring.com.cn/download/01ui7wDiwBI1.small)
 
 下面这个例子需要用到express和xmlparser：
 
@@ -77,29 +77,27 @@ app.post(waiterUrl,xmlparser({trim: true, explicitArray: false}),function (req, 
 
 Talker 负责给微信公众号服务器发送消息，可以在任何地方使用，用manager创建消息，然后send这个消息就可以了。
 
-![](http://www.ituring.com.cn/download/01ui7xWDz4BL.big)
+![](http://www.ituring.com.cn/download/01ui7xWDz4BL.small)
 
 ```js
 const talker = weixin.getTalker()
 talker.send(UserManager.usersGet())
-		  .then(response => response.json())
-		  .then(json => {
-		  	if(!json.errcode) {		  		
+		  .then(result => {
+		  	if(!result.errcode) {		  		
 				console.log("Get users:",json)
-		  		return CustomerMessageManager.text(json.next_openid,"感谢订阅")
+		  		return CustomerMessageManager.text(result.next_openid,"感谢订阅")
 		  	} else {
-		  		console.log("Get user list got error:",json.errmsg)
-				throw Error(json.errmsg)
+		  		console.log("Get user list got error:",result.errmsg)
+				throw Error(result.errmsg)
 		  	}
 		  })
 		  .then(message => talker.send(message))
 		  .catch(error => {
 		  	console.log("There is an error to get nextOpenId")
 		  })
-		  .then(response => response.json())
-		  .then(json => {
-			  	if(json.errcode) {		  		
-					console.log(`Send text message to customer ${nextOpenId} got error:${json.errmsg}`)
+		  .then(result => {
+			  	if(result.errcode) {		  		
+					console.log(`Send text message to customer ${nextOpenId} got error:${result.errmsg}`)
 			  	} else {
 			  		console.log(`Send text message to ${nextOpenId} success`)		  		
 			  	}
