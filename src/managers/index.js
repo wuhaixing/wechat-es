@@ -5,6 +5,7 @@ import UserManager from './user_manager'
 import MenuManager from './menu_manager'
 import CustomerMessageManager from './customer_message_manager'
 import CustomerServiceManager from './customer_service_manager'
+import StateManager from './state_manager'
 
 export {
   UserManager,
@@ -13,5 +14,6 @@ export {
   MaterialManager,
   MassMessageManager,
   CustomerMessageManager,
-  CustomerServiceManager
+  CustomerServiceManager,
+  StateManager
 }
