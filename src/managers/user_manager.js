@@ -3,27 +3,7 @@
 * 管理用户
 */
 
-const tagUrlPrefix = "https://api.weixin.qq.com/cgi-bin/tags/"
 const userUrlPrefix = "https://api.weixin.qq.com/cgi-bin/user/"
-
-function tagCreate(name) {
-		return {
-			"url":`${tagUrlPrefix}create`,
-			"method" : "post",
-			"body": {
-				"tag" : {
-					"name" : "${name}"
-				}
-			}
-		}
-}
-
-function tagGet() {
-		return {
-			"url":`${tagUrlPrefix}get`,
-			"method" : "get"
-		}
-}
 
 function usersGet(nextOpenId) {
 	if(nextOpenId) {
@@ -45,5 +25,5 @@ function usersGet(nextOpenId) {
 }
 
 export default {
-	tagCreate,tagGet,usersGet
+	usersGet
 }
