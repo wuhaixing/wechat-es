@@ -24,6 +24,58 @@ function get() {
 		}
 }
 
+function update(tagId,name) {
+		return {
+			"url":`${tagUrlPrefix}update`,
+			"method" : "post",
+			"body": {
+				"tag" : {
+					"id":tagId,
+					"name" : name
+				}
+		}
+}
+
+function delete(tagId,name) {
+		return {
+			"url":`${tagUrlPrefix}delete`,
+			"method" : "post",
+			"body": {
+				"tag" : {
+					"id":tagId
+				}
+		}
+}
+
+function batchTagging(tagId,users) {
+		return {
+			"url":`${tagUrlPrefix}members/batchtagging`,
+			"method" : "post",
+			"body": {
+				"openid_list" : users,
+				"tagid":tagId
+		}
+}
+
+function batchUntagging(tagId,users) {
+		return {
+			"url":`${tagUrlPrefix}members/batchuntagging`,
+			"method" : "post",
+			"body": {
+				"openid_list" : users,
+				"tagid":tagId
+		}
+}
+
+function getTagsOfUser(userId) {
+		return {
+			"url":`${tagUrlPrefix}getidlist`,
+			"method" : "post",
+			"body": {
+				"openid" : userId
+		}
+}
+
 export default {
 	create,get
 }

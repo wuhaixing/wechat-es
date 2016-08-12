@@ -5,7 +5,7 @@
 
 const userUrlPrefix = "https://api.weixin.qq.com/cgi-bin/user/"
 
-function usersGet(nextOpenId) {
+function getList(nextOpenId) {
 	if(nextOpenId) {
 		return {
 				"url":`${userUrlPrefix}get`,
@@ -21,9 +21,44 @@ function usersGet(nextOpenId) {
 				"method" : "get"
 			}
 	}
+}
+
+function getInfo(openId,lang) {
+	return {
+			"url":`${userUrlPrefix}get`,
+			"method" : "get",
+			"parameters":
+				{
+					"openid": openId,
+					"lang": lang || "zh-CN"
+				}
+		}
+}
+
+function batchGetInfo(users) {
+	return {
+		"url":`${tagUrlPrefix}members/batchuntagging`,
+		"method" : "post",
+		"body": {
+			"user_list" : users
+	}
+}
+
+function setLang(users,lang) {
+	if(users && users.length > 0) {
+			const params = users.map(user => {
+												return {
+													"openid":user,
+													"lang": lang || "zh-CN"
+												}
+											})
+		  return params
+	} else {
+		return []
+	}
 
 }
 
 export default {
-	usersGet
+	getList,getInfo,batchGetInfo,setLang
 }
