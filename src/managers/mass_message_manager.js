@@ -64,7 +64,6 @@ function _mediaToTag(type,mediaId,tagId) {
 	const msg = {
 		'type':type,
 		'content': {"media_id":mediaId}
-		},
 	}
 	return _msgToTag(msg,tagId)
 }
