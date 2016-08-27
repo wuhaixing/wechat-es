@@ -33,10 +33,11 @@ function update(tagId,name) {
 					"id":tagId,
 					"name" : name
 				}
+			}
 		}
 }
 
-function delete(tagId,name) {
+function del(tagId,name) {
 		return {
 			"url":`${tagUrlPrefix}delete`,
 			"method" : "post",
@@ -44,6 +45,7 @@ function delete(tagId,name) {
 				"tag" : {
 					"id":tagId
 				}
+			}
 		}
 }
 
@@ -54,6 +56,7 @@ function batchTagging(tagId,users) {
 			"body": {
 				"openid_list" : users,
 				"tagid":tagId
+			}
 		}
 }
 
@@ -64,6 +67,7 @@ function batchUntagging(tagId,users) {
 			"body": {
 				"openid_list" : users,
 				"tagid":tagId
+			}
 		}
 }
 
@@ -73,9 +77,10 @@ function getTagsOfUser(userId) {
 			"method" : "post",
 			"body": {
 				"openid" : userId
+			}
 		}
 }
 
 export default {
-	create,get
+	create,get,update,del,batchTagging,batchUntagging,getTagsOfUser
 }

@@ -41,6 +41,7 @@ function batchGetInfo(users) {
 		"method" : "post",
 		"body": {
 			"user_list" : users
+		}
 	}
 }
 

@@ -139,7 +139,6 @@ function _mediaToUsers(type,mediaId,users) {
 	const msg = {
 		'type':type,
 		'content': {"media_id":mediaId}
-		},
 	}
 	return _msgToUsers(msg,users)
 }

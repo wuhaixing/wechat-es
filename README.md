@@ -1,5 +1,7 @@
 # wechat-es
 
+## In Progress,Do Not Use It!
+
 本项目起源于[搭建微信公众号服务器](https://wuhaixing.gitbooks.io/-weixin-server/content/)：
 
 - [环境配置](https://wuhaixing.gitbooks.io/-weixin-server/content/chapter1.html)
