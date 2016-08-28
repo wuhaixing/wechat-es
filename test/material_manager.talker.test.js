@@ -1,7 +1,6 @@
 import 'babel-polyfill'
 import chai,{assert} from 'chai'
 import chaiAsPromised  from 'chai-as-promised'
-import nock from 'nock'
 import Weixin from '../lib'
 import {MaterialManager} from '../lib'
 import Immutable,{List} from 'immutable'
@@ -18,6 +17,7 @@ chai.use(chaiAsPromised)
 
 describe('Weixin Talker:', function (done) {
   describe('material manager', function () {
+
     it('should got media_id after send article success', function () {
 			return talker.send(
 					MaterialManager.article(

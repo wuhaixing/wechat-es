@@ -60,6 +60,19 @@ const listCustomerServiceNock = nock('https://api.weixin.qq.com/')
 										})
 
 //========material nock=============================//
+const materialImageNock = nock('https://api.weixin.qq.com')
+										.defaultReplyHeaders({
+											'Content-Type': 'application/json'
+										})
+								    .post('/cgi-bin/material/add_material')
+										.query({
+												"access_token":'accessToken',
+												"type":"image"
+										})
+								    .reply(200, {
+											"media_id":"mediaId",
+											"url":"url"
+										})
 const articleNock = nock('https://api.weixin.qq.com')
 										.defaultReplyHeaders({
 											'Content-Type': 'application/json'
@@ -95,12 +108,15 @@ const userGetNock =  nock('https://api.weixin.qq.com')
                       "next_openid":"NEXT_OPENID"
                     })
 //========media nock=============================//
-const imageNock =  nock('https://api.weixin.qq.com')
+const mediaImageNock =  nock('https://api.weixin.qq.com')
 										.defaultReplyHeaders({
 											'Content-Type': 'application/json'
 										})
 										.post('/cgi-bin/media/uploadimg')
-										.query({"access_token":'accessToken'})
+										.query({
+											"access_token":'accessToken',
+											"type":"image"
+										})
 										.reply(200,{
-                      "url":"image_url"
+                      "url":"url"
                     })

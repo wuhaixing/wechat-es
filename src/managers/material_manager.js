@@ -42,7 +42,7 @@ const materialUrlPrefix = "https://api.weixin.qq.com/cgi-bin/material/"
 function material(type,media) {
 	return {
 		"url":`${materialUrlPrefix}add_material`,
-		"method" : "post",
+		"method" : "upload",
 		"parameters": {	"type": type },
 		"body" : {"media":media}
 	}
@@ -57,13 +57,13 @@ function material(type,media) {
 *
 */
 function image(image) {
-	return material("image",media)
+	return material("image",image)
 }
 
 function video(media,title,introduction) {
 	return {
 		"url":`${materialUrlPrefix}add_material`,
-		"method" : "post",
+		"method" : "upload",
 		"parameters": {	"type": type },
 		"body" : {
 			"media":media,

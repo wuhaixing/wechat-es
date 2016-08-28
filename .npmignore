@@ -1,2 +1,3 @@
 # The files to not push to NPM
 src/
+raw.js

@@ -87,6 +87,6 @@ function image(img) {
 	}
 }
 
-export {
+export default {
 	get,media,image
 }
