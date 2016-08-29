@@ -149,8 +149,8 @@ function articles(articles) {
 			"url":`${materialUrlPrefix}add_news`,
 			"method" : "post",
 			"body": {
-						 "articles":Immutable.toJS(articles)
-					}
+						 "articles":articles.toJS()
+			}
 		}
 	} else {
 		throw Error("Articles format should be an Immutable List")

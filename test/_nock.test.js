@@ -92,6 +92,25 @@ const articleNock = nock('https://api.weixin.qq.com')
 								    .reply(200, {
 											"media_id":"mediaId"
 										})
+const articlesNock = nock('https://api.weixin.qq.com')
+										.defaultReplyHeaders({
+											'Content-Type': 'application/json'
+										})
+								    .post('/cgi-bin/material/add_news',{
+											"articles" : [{
+												"title": "title",
+												"thumb_media_id": "thumbMediaId",
+												"author": "author",
+												"digest": "digest",
+												"show_cover_pic": 1,
+												"content": "content",
+												"content_source_url": "contentSourceUrl"
+												}]
+										})
+										.query({"access_token":'accessToken'})
+								    .reply(200, {
+											"media_id":"mediaId"
+										})
 //========user nock=============================//
 const userGetNock =  nock('https://api.weixin.qq.com')
 										.defaultReplyHeaders({

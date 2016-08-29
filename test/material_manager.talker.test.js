@@ -61,5 +61,25 @@ describe('Weixin Talker:', function (done) {
 			assert.equal(articles.equals(expectedList),true)
 		});
 
+		it('should send articles success', function () {
+			let article = {
+					 title       : "title", //标题
+					 thumbMediaId: "thumbMediaId", //图文消息的封面图片素材id（必须是永久mediaId）
+					 author      : "author", //作者
+					 digest      : "digest", //图文消息的摘要，仅有单图文消息才有摘要，多图文此处为空
+					 showCoverPic: true, //是否显示封面，false不显示，true即显示
+					 content     : "content", //图文消息的具体内容，支持HTML标签，必须少于2万字符，小于1M，且此处会去除JS
+					 contentSourceUrl:"contentSourceUrl"
+				 }
+
+			let articles = MaterialManager.addArticle(article)
+			return talker.send(
+					MaterialManager.articles(articles)
+			).then(result => {
+				 return result.media_id
+			 })
+			 .should.eventually.equal("mediaId")
+		});
+
   });
 });
