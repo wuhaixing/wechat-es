@@ -150,7 +150,7 @@ function _msgToUsers(msg,users) {
 	}
 	body[msg.type] = msg.content
 	return {
-		"url":`${massUrlPrefix}sendall`,
+		"url":`${massUrlPrefix}send`,
 		"method" : "post",
 		"body": body
 	}

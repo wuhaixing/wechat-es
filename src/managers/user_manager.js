@@ -36,11 +36,12 @@ function getInfo(openId,lang) {
 }
 
 function batchGetInfo(users) {
+	const _users = setLang(users)
 	return {
-		"url":`${tagUrlPrefix}members/batchuntagging`,
+		"url":`${userUrlPrefix}info/batchget`,
 		"method" : "post",
 		"body": {
-			"user_list" : users
+			"user_list" : _users
 		}
 	}
 }

@@ -83,10 +83,10 @@ Talker 负责给微信公众号服务器发送消息，可以在任何地方使�
 
 ```js
 const talker = weixin.getTalker()
-talker.send(UserManager.usersGet())
+talker.send(UserManager.getList())
 		  .then(result => {
 		  	if(!result.errcode) {		  		
-				console.log("Get users:",json)
+				  console.log("Get users:",json)
 		  		return CustomerMessageManager.text(result.next_openid,"感谢订阅")
 		  	} else {
 		  		console.log("Get user list got error:",result.errmsg)
