@@ -15,9 +15,90 @@ import Immutable,{List} from 'immutable'
 const materialUrlPrefix = "https://api.weixin.qq.com/cgi-bin/material/"
 
 /**
+* 获取永久素材的总数
+* 官方文档：
+* http://mp.weixin.qq.com/wiki/16/8cc64f8c189674b421bee3ed403993b8.html
+*
+* 返回说明
+{
+  "voice_count":COUNT,
+  "video_count":COUNT,
+  "image_count":COUNT,
+  "news_count":COUNT
+}
+*/
+function getCount() {
+	return {
+		"url":`${materialUrlPrefix}get_materialcount`,
+		"method" : "get"
+	}
+}
+
+/**
+* 获取永久素材的列表
+* 官方文档：
+* http://mp.weixin.qq.com/wiki/12/2108cd7aafff7f388f41f37efa710204.html
+*
+* 返回说明
+* 发送该消息后，永久图文消息素材列表的响应如下：
+*   {
+		   "total_count": TOTAL_COUNT,
+		   "item_count": ITEM_COUNT,
+		   "item": [{
+		       "media_id": MEDIA_ID,
+		       "content": {
+		           "news_item": [{
+		               "title": TITLE,
+		               "thumb_media_id": THUMB_MEDIA_ID,
+		               "show_cover_pic": SHOW_COVER_PIC(0 / 1),
+		               "author": AUTHOR,
+		               "digest": DIGEST,
+		               "content": CONTENT,
+		               "url": URL,
+		               "content_source_url": CONTETN_SOURCE_URL
+		           },
+		           //多图文消息会在此处有多篇文章
+		           ]
+		        },
+		        "update_time": UPDATE_TIME
+		    },
+		    //可能有多个图文消息item结构
+		  ]
+		}
+* 其他类型（图片、语音、视频）的返回如下：
+
+		{
+		   "total_count": TOTAL_COUNT,
+		   "item_count": ITEM_COUNT,
+		   "item": [{
+		       "media_id": MEDIA_ID,
+		       "name": NAME,
+		       "update_time": UPDATE_TIME,
+		       "url":URL
+		   },
+		   //可能会有多个素材
+		   ]
+		}
+* @param type 素材的类型，图片（image）、视频（video）、语音 （voice）、图文（news），默认为news
+* @param offset 从全部素材的该偏移位置开始返回，0表示从第一个素材返回，默认为0
+* @param count 返回素材的数量，取值在1到20之间，默认为20
+*
+*/
+function batchGet(type = 'news',offset = 0,count = 20) {
+	return {
+		"url":`${materialUrlPrefix}batchget_material`,
+		"method" : "post",
+		"body" : {
+			 "type":type,
+			 "offset":offset,
+			 "count":count
+		}
+	}
+}
+/**
 * 新增永久素材
 * 官方文档：
-* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726&token=&lang=zh_CN
+* http://mp.weixin.qq.com/wiki/14/7e6c03263063f4813141c3e17dd4350a.html
 * 公众号经常有需要用到一些临时性的多媒体素材的场景，例如在使用接口特别是发送消息时，对多媒体文件、
 * 多媒体消息的获取和调用等操作，是通过media_id来进行的。素材管理接口对所有认证的订阅号和服务号
 * 开放。通过本接口，公众号可以新增临时素材（即上传临时多媒体文件）。
@@ -49,33 +130,28 @@ function material(type,media) {
 }
 
 /**
-* 上传图文消息内的图片获取URL
+* 删除永久素材
 * 官方文档：
-* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726&token=&lang=zh_CN
-* 本接口所上传的图片不占用公众号的素材库中图片数量的5000个的限制。图片仅支持jpg/png格式，大小必须在1MB以下。
-* @param media form-data中媒体文件标识，有filename、filelength、content-type等信息
+* http://mp.weixin.qq.com/wiki/5/e66f61c303db51a6c0f90f46b15af5f5.html
+* 返回说明
+* {
+    "errcode":ERRCODE,
+    "errmsg":ERRMSG
+   }
+* 正常情况下调用成功时，errcode将为0。
+*
+* @param mediaId 可以通过获取素材列表来获知素材的media_id
 *
 */
-function image(image) {
-	return material("image",image)
-}
-
-function video(media,title,introduction) {
+function del(mediaId) {
 	return {
-		"url":`${materialUrlPrefix}add_material`,
-		"method" : "upload",
-		"parameters": {	"type": type },
-		"body" : {
-			"media":media,
-			"description":{
-				"title" : title,
-				"introduction": introduction
-			}
-		}
+		"url":`${materialUrlPrefix}del_material`,
+		"method" : "post",
+		"body" : {"media_id":mediaId}
 	}
 }
 /**
-* 单条永久图文素材
+* 新增单条永久图文素材
 * 官方文档：
 * https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729&token=&lang=zh_CN
 *
@@ -108,19 +184,19 @@ function article(title,thumbMediaId,author,digest,showCoverPic,content,contentSo
 	}
 }
 /**
-* 新增单条永久图文素材
+* 将单条永久图文素材添加到图文素材列表中
 * 官方文档：
 * https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729&token=&lang=zh_CN
 *
 * @param articles 图文消息列表
 * @param article 永久图文素材，结构同 article
 *  { title, //标题
-*    thumbMediaId, //图文消息的封面图片素材id（必须是永久mediaId）
+*    thumb_media_id, //图文消息的封面图片素材id（必须是永久mediaId）
 *    author, //作者
 *    digest, //图文消息的摘要，仅有单图文消息才有摘要，多图文此处为空
-*    showCoverPic, //是否显示封面，false不显示，true即显示
+*    show_cover_pic, //是否显示封面，false不显示，true即显示
 *    content, //图文消息的具体内容，支持HTML标签，必须少于2万字符，小于1M，且此处会去除JS
-*    contentSourceUrl //图文消息的原文地址，即点击“阅读原文”后的URL
+*    content_source_url //图文消息的原文地址，即点击“阅读原文”后的URL
 * }
 */
 function addArticle(article,articles = new List()) {
@@ -130,19 +206,34 @@ function addArticle(article,articles = new List()) {
   if(!List.isList(articles) ) {
 		articles = List.of(articles)
 	}
-  let _showCoverPic = article.showCoverPic ? 1 : 0
+  let _showCoverPic = article.show_cover_pic ? 1 : 0
 
 	return articles.push(Immutable.fromJS({
 			title              : article.title,
-			thumb_media_id     : article.thumbMediaId,
+			thumb_media_id     : article.thumb_media_id,
 			author             : article.author,
 			digest             : article.digest,
 			show_cover_pic     : _showCoverPic,
 			content            : article.content,
-			content_source_url : article.contentSourceUrl
+			content_source_url : article.content_source_url
 	}))
 }
-
+/**
+* 新增多条条永久图文素材
+* 官方文档：
+* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729&token=&lang=zh_CN
+*
+* @param articles 图文消息列表
+* @param article 永久图文素材，结构同 article
+*  { title, //标题
+*    thumb_media_id, //图文消息的封面图片素材id（必须是永久mediaId）
+*    author, //作者
+*    digest, //图文消息的摘要，仅有单图文消息才有摘要，多图文此处为空
+*    show_cover_pic, //是否显示封面，false不显示，true即显示
+*    content, //图文消息的具体内容，支持HTML标签，必须少于2万字符，小于1M，且此处会去除JS
+*    content_source_url //图文消息的原文地址，即点击“阅读原文”后的URL
+* }
+*/
 function articles(articles) {
 	if(List.isList(articles)) {
 		return {
@@ -157,7 +248,91 @@ function articles(articles) {
 	}
 
 }
+/**
+* 对永久图文素材进行修改
+* 官方文档：
+* http://mp.weixin.qq.com/wiki/4/19a59cba020d506e767360ca1be29450.html
+*
+  "media_id":MEDIA_ID,
+  "index":INDEX,
+  "articles": {
+       "title": TITLE,
+       "thumb_media_id": THUMB_MEDIA_ID,
+       "author": AUTHOR,
+       "digest": DIGEST,
+       "show_cover_pic": SHOW_COVER_PIC(0 / 1),
+       "content": CONTENT,
+       "content_source_url": CONTENT_SOURCE_URL
+    }
+* 返回说明
+* {
+    "errcode":ERRCODE,
+    "errmsg":ERRMSG
+   }
+* 正常情况下调用成功时，errcode将为0。
+*
+* @param mediaId 要修改的图文消息的id
+* @param index 要更新的文章在图文消息中的位置（多图文消息时，此字段才有意义），第一篇为0
+* @param article 要修改的图文消息,结构为：
+					{
+							 "title": TITLE,
+							 "thumb_media_id": THUMB_MEDIA_ID,
+							 "author": AUTHOR,
+							 "digest": DIGEST,
+							 "show_cover_pic": SHOW_COVER_PIC(0 / 1),
+							 "content": CONTENT,
+							 "content_source_url": CONTENT_SOURCE_URL
+						}
+*
+*/
+function updateArticle(mediaId,index,article) {
+	return {
+		"url":`${materialUrlPrefix}update_news`,
+		"method" : "post",
+		"body" : {
+			"media_id":mediaId,
+			"index":index,
+		  "articles": article
+		}
+	}
+}
+
+/**
+* 上传图文消息内的图片获取URL
+* 官方文档：
+* https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726&token=&lang=zh_CN
+* 本接口所上传的图片不占用公众号的素材库中图片数量的5000个的限制。图片仅支持jpg/png格式，大小必须在1MB以下。
+* @param media form-data中媒体文件标识，有filename、filelength、content-type等信息
+*
+*/
+function image(image) {
+	return material("image",image)
+}
+
+function video(media,title,introduction) {
+	return {
+		"url":`${materialUrlPrefix}add_material`,
+		"method" : "upload",
+		"parameters": {	"type": type },
+		"body" : {
+			"media":media,
+			"description":{
+				"title" : title,
+				"introduction": introduction
+			}
+		}
+	}
+}
 
 export default {
-	article,articles,material,video,image,addArticle
+	article,
+	addArticle,
+	articles,
+	updateArticle,
+	material,
+	video,
+	image,
+	getCount,
+	batchGet,
+	del
 }
