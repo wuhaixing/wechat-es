@@ -10,6 +10,7 @@ const massUrlPrefix = "https://api.weixin.qq.com/cgi-bin/message/mass/"
 *
 */
 
+
 /**
 * 图文消息
 */
@@ -143,14 +144,15 @@ function _mediaToUsers(type,mediaId,users) {
 	return _msgToUsers(msg,users)
 }
 
-function _msgToUsers(msg,users) {
+function _msgToUsers(msg,users,isPreview= false) {
 	let body = {
 		"touser":users,
 		"msgtype":msg.type
 	}
 	body[msg.type] = msg.content
+	const urlSuffix = isPreview ? 'preview' : 'send'
 	return {
-		"url":`${massUrlPrefix}send`,
+		"url":`${massUrlPrefix}${urlSuffix}`,
 		"method" : "post",
 		"body": body
 	}
